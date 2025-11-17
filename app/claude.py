@@ -15,7 +15,14 @@ def claude():
         return redirect(url_for('login'))
     prompt = request.form.get('prompt')
     response = None
+    # Initialize memory if not present
+    if 'claude_history' not in session:
+        session['claude_history'] = []
+    # Add user message to history
     if prompt:
+        session['claude_history'].append({"role": "user", "content": prompt})
+        # Only keep the last 10 messages for context (adjust as needed)
+        session['claude_history'] = session['claude_history'][-5000:]
         headers = {
             'x-api-key': ANTHROPIC_API_KEY,
             'content-type': 'application/json',
@@ -24,15 +31,17 @@ def claude():
         data = {
             'model': 'claude-3-opus-20240229',
             'max_tokens': 2048,
-            'messages': [
-                {"role": "user", "content": prompt}
-            ]
+            'messages': session['claude_history']
         }
         try:
             r = requests.post(CLAUDE_API_URL, headers=headers, json=data)
             r.raise_for_status()
             result = r.json()
-            response = result.get('content', '')
+            # Add Claude's response to history
+            ai_content = result.get('content', '')
+            session['claude_history'].append({"role": "assistant", "content": ai_content})
+            session['claude_history'] = session['claude_history'][-5000:]
+            response = ai_content
         except Exception as e:
             response = f"Error: {e}"
     return render_template('dashboard.html', response=response)
