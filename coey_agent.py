@@ -66,4 +66,6 @@ def ask_claude():
     return render_template_string(HTML_TEMPLATE, response=ai_response)
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    import os
+    port = int(os.environ.get("PORT", 5000))
+    app.run(host="0.0.0.0", port=port)
