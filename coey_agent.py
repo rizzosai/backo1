@@ -6,6 +6,29 @@ import anthropic
 import zipfile
 import io
 from flask import send_file
+import json
+# Endpoint to get dashboard structure (menus/tabs)
+@app.route('/dashboard-structure', methods=['GET'])
+def get_dashboard_structure():
+    try:
+        with open('dashboard_structure.json', 'r') as f:
+            structure = json.load(f)
+        return structure
+    except Exception as e:
+        return {"error": str(e)}, 500
+
+# Endpoint to update dashboard structure (menus/tabs)
+@app.route('/dashboard-structure', methods=['POST'])
+def update_dashboard_structure():
+    data = request.get_json()
+    if not data:
+        return {"error": "No data provided."}, 400
+    try:
+        with open('dashboard_structure.json', 'w') as f:
+            json.dump(data, f, indent=2)
+        return {"success": True}
+    except Exception as e:
+        return {"error": str(e)}, 500
 
 app = Flask(__name__)
 

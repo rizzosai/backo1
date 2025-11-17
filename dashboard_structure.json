@@ -1,0 +1,12 @@
+{
+  "menus": [
+    {"name": "Home", "route": "/"},
+    {"name": "Dashboard", "route": "/admin-dashboard"},
+    {"name": "Settings", "route": "/settings"}
+  ],
+  "tabs": [
+    {"name": "Overview", "route": "/overview"},
+    {"name": "Reports", "route": "/reports"},
+    {"name": "Users", "route": "/users"}
+  ]
+}
