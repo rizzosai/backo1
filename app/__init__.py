@@ -1,3 +1,7 @@
+# Facebook landing page route
+@app.route('/facebook', methods=['GET'])
+def facebook_landing():
+    return render_template('facebook.html')
 
 
 from flask import Flask, render_template, request, redirect, url_for, session, flash

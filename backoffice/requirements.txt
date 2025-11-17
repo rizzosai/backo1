@@ -1,2 +1,5 @@
 Flask
+gunicorn
+anthropic
+python-dotenv
 requests

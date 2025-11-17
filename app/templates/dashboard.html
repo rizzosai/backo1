@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Dashboard - Backoffice</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="dashboard-container">
+        <h2>Welcome, {{ session['user'] }}</h2>
+        <a href="{{ url_for('logout') }}">Logout</a>
+        <h3>Claude AI Bot</h3>
+        <form method="post" action="/claude">
+            <textarea name="prompt" placeholder="Give Claude an order..." required></textarea><br>
+            <button type="submit">Send to Claude</button>
+        </form>
+        {% if response %}
+        <div class="claude-response">
+            <h4>Claude's Response:</h4>
+            <pre>{{ response }}</pre>
+        </div>
+        {% endif %}
+        <hr>
+        <h3>Claude Code Generator</h3>
+        <form method="post" action="/claude/generate">
+            <textarea name="task" placeholder="Describe the app or website you want Claude to generate (e.g., 'Create a simple Flask todo app')" required></textarea><br>
+            <button type="submit">Generate Code</button>
+        </form>
+    </div>
+</body>
+</html>

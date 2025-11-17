@@ -25,7 +25,7 @@ PrintHood/
 Recent/
 SendTo/
 Start Menu/
-Templates/
+# Templates/ (commented out to allow tracking of templates folder)
 Saved Games/
 Videos/
 Music/
